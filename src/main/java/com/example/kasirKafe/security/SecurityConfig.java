@@ -50,6 +50,9 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // Swagger/OpenAPI Documentation (Public)
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**").permitAll()
+                        
                         // Endpoint PUBLIC
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
@@ -59,6 +62,7 @@ public class SecurityConfig {
 
                         // Kasir & Admin boleh
                         .requestMatchers("/api/orders/**").hasAnyRole("ADMIN", "KASIR")
+                        .requestMatchers("/api/revenue/**").hasAnyRole("ADMIN", "KASIR")
 
                         // Lainnya wajib login
                         .anyRequest().authenticated()

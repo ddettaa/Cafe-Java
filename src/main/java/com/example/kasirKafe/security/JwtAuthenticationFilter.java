@@ -60,6 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             // Token invalid, continue without authentication
+            // Log error for debugging (optional)
+            // logger.error("JWT authentication failed", e);
         }
 
         filterChain.doFilter(request, response);
